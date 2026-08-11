@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream text-charcoal font-sans antialiased;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif text-charcoal;
+    text-wrap: balance;
+  }
+
+  /* Selection in soft sage. */
+  ::selection {
+    background-color: #d5e0c9;
+    color: #2d2d2d;
+  }
+
+  /* Visible, on-brand focus ring for keyboard users only. */
+  :focus-visible {
+    outline: 2px solid #5e6e50;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Respect users who prefer reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-luxe {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-10;
+  }
+
+  /* Small uppercase label that sits above section headings. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-luxe text-sage-700;
+  }
+
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-8 bg-sage-400;
+  }
+
+  /* Primary CTA — sage fill, charcoal-readable, generous tap target. */
+  .btn-primary {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-sage-700 px-7 py-3
+           text-sm font-medium uppercase tracking-[0.14em] text-cream shadow-card
+           transition-[background-color,transform,box-shadow] duration-200 ease-luxe
+           hover:bg-sage-800 hover:-translate-y-0.5 hover:shadow-lift
+           active:translate-y-0 [touch-action:manipulation];
+  }
+
+  /* Secondary / ghost CTA on light backgrounds. */
+  .btn-outline {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-charcoal/20
+           bg-transparent px-7 py-3 text-sm font-medium uppercase tracking-[0.14em] text-charcoal
+           transition-[background-color,border-color,transform] duration-200 ease-luxe
+           hover:border-sage-600 hover:text-sage-800 [touch-action:manipulation];
+  }
+
+  /* Animated underline link. */
+  .link-underline {
+    @apply relative inline-block transition-colors duration-200 hover:text-sage-800;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-current
+           transition-transform duration-300 ease-luxe;
+  }
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-charcoal/10;
+  }
+}
