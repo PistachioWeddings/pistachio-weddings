@@ -129,7 +129,7 @@ export const faqs: Faq[] = [
   {
     question: 'What currencies and payment methods do you accept?',
     answer:
-      'We securely accept payments via Credit Cards in EUR, USD, and ILS processed through Stripe.',
+      'We securely accept payments via Credit Cards in EUR, USD, and ILS processed through authorized PCI-DSS compliant payment service providers.',
   },
 ]
 
@@ -163,7 +163,7 @@ export const policies: Record<'terms' | 'privacy' | 'refund', Policy> = {
       {
         heading: '2. Bookings & Payments',
         body: [
-          'A signed contract and the initial deposit/retainer are required to reserve your date and begin work. Payments are processed securely through Stripe in EUR, USD or ILS. We do not store your full card details. The payment schedule and the treatment of deposits are set out in our Refund & Cancellation Policy, which forms part of these Terms.',
+          'A signed contract and the initial deposit/retainer are required to reserve your date and begin work. Payments are processed securely through authorized PCI-DSS compliant payment service providers in EUR, USD or ILS. We do not store your full card details. The payment schedule and the treatment of deposits are set out in our Refund & Cancellation Policy, which forms part of these Terms.',
         ],
       },
       {
@@ -232,7 +232,7 @@ export const policies: Record<'terms' | 'privacy' | 'refund', Policy> = {
       {
         heading: 'Payments & Security',
         body: [
-          'Payments are processed securely by Stripe, a PCI-DSS compliant payment provider. Your full card details are handled directly by Stripe and are never stored on our servers. We never sell, rent or trade your personal information to third parties.',
+          'Payments are processed securely by authorized PCI-DSS compliant payment providers. Your full card details are handled directly by our payment gateway providers and are never stored on our servers. We never sell, rent or trade your personal information to third parties.',
         ],
       },
       {

@@ -62,7 +62,7 @@ export function Footer() {
 
           <p className="mx-auto mt-8 max-w-xl text-[0.8rem] leading-relaxed text-cream/60">
             Every wedding is individually quoted. Secure deposits and payments are processed through
-            Stripe in EUR, USD &amp; ILS.
+            authorized payment providers in EUR, USD &amp; ILS.
           </p>
         </div>
       </div>
@@ -102,7 +102,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Contact / business details (Stripe compliance) */}
+        {/* Contact / business details */}
         <div>
           <h3 className="text-[0.72rem] font-semibold uppercase tracking-wider2 text-cream/80">
             Contact
@@ -189,7 +189,7 @@ export function Footer() {
       <div className="border-t border-cream/10">
         <div className="container-luxe flex flex-col items-center justify-between gap-3 py-6 text-center text-[0.72rem] text-cream/50 sm:flex-row sm:text-left">
           <p>© {year} {business.legalName}. All rights reserved.</p>
-          <p>Secure payments via Stripe · EUR · USD · ILS</p>
+          <p>Secure payments · EUR · USD · ILS</p>
         </div>
       </div>
 
