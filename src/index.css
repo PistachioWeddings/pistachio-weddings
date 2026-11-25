@@ -5,99 +5,160 @@
 @layer base {
   :root {
     color-scheme: light;
+    --ease-brand: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --header-h: 4rem;
+
+    /* English: editorial serif headings on a generous scale. */
+    --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+    --fs-hero: clamp(2.9rem, 8.2vw, 6.6rem);
+    --fs-d1: clamp(2.4rem, 5.4vw, 4.6rem);
+    --fs-d2: clamp(1.9rem, 3.6vw, 3rem);
+    --fs-d3: clamp(1.45rem, 2.2vw, 1.95rem);
+    --lh-display: 1.02;
+  }
+
+  /* Hebrew: Cormorant has no Hebrew glyphs, so headings move to Heebo on a calmer scale. */
+  html[lang='he'] {
+    --font-display: 'Heebo', system-ui, sans-serif;
+    --fs-hero: clamp(2.3rem, 6.4vw, 5rem);
+    --fs-d1: clamp(2rem, 4.4vw, 3.6rem);
+    --fs-d2: clamp(1.6rem, 3vw, 2.4rem);
+    --fs-d3: clamp(1.25rem, 1.8vw, 1.6rem);
+    --lh-display: 1.12;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --header-h: 4.5rem;
+    }
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--header-h);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    @apply bg-cream text-charcoal font-sans antialiased;
+    @apply bg-bg font-sans text-ink antialiased;
+    font-weight: 400;
     font-feature-settings: 'kern', 'liga', 'calt';
     text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-serif text-charcoal;
+  h1,
+  h2,
+  h3 {
     text-wrap: balance;
   }
 
-  /* Selection in soft sage. */
+  p {
+    text-wrap: pretty;
+  }
+
+  html[lang='he'] .font-display {
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
   ::selection {
-    background-color: #d5e0c9;
-    color: #2d2d2d;
+    background-color: #e9edde;
+    color: #2b3328;
   }
 
-  /* Visible, on-brand focus ring for keyboard users only. */
   :focus-visible {
-    outline: 2px solid #5e6e50;
+    outline: 2px solid #3d5741;
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
-  /* Respect users who prefer reduced motion. */
+  button,
+  a,
+  [role='tab'] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
     *,
     *::before,
     *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
-      scroll-behavior: auto !important;
     }
   }
 }
 
 @layer components {
-  .container-luxe {
-    @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-10;
+  .wrap {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-12;
   }
 
-  /* Small uppercase label that sits above section headings. */
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-luxe text-sage-700;
+    @apply inline-flex items-center gap-3 text-eyebrow font-medium uppercase text-forest;
   }
-
   .eyebrow::before {
     content: '';
-    @apply h-px w-8 bg-sage-400;
+    @apply h-px w-7 bg-sage;
+  }
+  html[lang='he'] .eyebrow {
+    letter-spacing: 0.04em;
+    font-size: 0.8rem;
   }
 
-  /* Primary CTA — sage fill, charcoal-readable, generous tap target. */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-full px-7 text-[0.9rem] font-medium
+           transition-[background-color,color,border-color,transform,box-shadow] duration-300 ease-brand;
+  }
   .btn-primary {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-sage-700 px-7 py-3
-           text-sm font-medium uppercase tracking-[0.14em] text-cream shadow-card
-           transition-[background-color,transform,box-shadow] duration-200 ease-luxe
-           hover:bg-sage-800 hover:-translate-y-0.5 hover:shadow-lift
-           active:translate-y-0 [touch-action:manipulation];
+    @apply btn bg-forest text-bg shadow-card hover:bg-forest-dark hover:shadow-up active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply btn border border-hairline-2 text-ink hover:border-forest hover:text-forest;
+  }
+  .btn-light {
+    @apply btn border border-white/40 text-white backdrop-blur-sm hover:border-white hover:bg-white/10;
   }
 
-  /* Secondary / ghost CTA on light backgrounds. */
-  .btn-outline {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-charcoal/20
-           bg-transparent px-7 py-3 text-sm font-medium uppercase tracking-[0.14em] text-charcoal
-           transition-[background-color,border-color,transform] duration-200 ease-luxe
-           hover:border-sage-600 hover:text-sage-800 [touch-action:manipulation];
+  .link {
+    @apply underline decoration-hairline-2 decoration-1 underline-offset-[6px] transition-colors duration-300 ease-brand
+           hover:text-forest hover:decoration-forest;
   }
 
-  /* Animated underline link. */
-  .link-underline {
-    @apply relative inline-block transition-colors duration-200 hover:text-sage-800;
+  .media {
+    @apply relative overflow-hidden bg-sage-soft;
   }
-  .link-underline::after {
-    content: '';
-    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-current
-           transition-transform duration-300 ease-luxe;
-  }
-  .link-underline:hover::after {
-    @apply origin-left scale-x-100;
+  .media > img,
+  .media > video {
+    @apply absolute inset-0 h-full w-full object-cover;
   }
 
-  .hairline {
-    @apply h-px w-full bg-charcoal/10;
+  .field {
+    @apply min-h-[48px] w-full rounded-xl border border-hairline bg-inset px-4 text-[0.95rem] text-ink
+           placeholder:text-faint transition-colors duration-200 ease-brand
+           focus:border-forest focus:bg-white focus:outline-none;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }

@@ -1,76 +1,67 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { Plus } from 'lucide-react'
+import { useLang } from '../i18n'
+import { SECTION } from '../data/site'
 import { Reveal } from './Reveal'
-import { faqs } from '../data/site'
+import { SectionHeading } from './SectionHeading'
 
 export function Faq() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const { t } = useLang()
+  const [open, setOpen] = useState<number | null>(0)
+  const base = useId()
 
   return (
-    <section id="faq" className="bg-cream-warm py-24 sm:py-32">
-      <div className="container-luxe">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow justify-center">Good to Know</p>
-          <h2 className="mt-5 text-3xl font-medium leading-tight sm:text-4xl lg:text-[2.75rem]">
-            Questions, answered
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-charcoal-soft">
-            From kosher ceremonies to guest counts — the details couples ask us most.
-          </p>
-        </Reveal>
+    <section id={SECTION.faq} aria-labelledby="faq-title" className="bg-bg py-24 md:py-32">
+      <div className="wrap grid gap-12 md:grid-cols-12 md:gap-10">
+        <div className="md:col-span-4">
+          <div className="md:sticky md:top-[calc(var(--header-h)+2rem)]">
+            <SectionHeading id="faq-title" eyebrow={t.faq.eyebrow} title={t.faq.title} />
+          </div>
+        </div>
 
-        <Reveal className="mx-auto mt-14 max-w-3xl">
-          <dl>
-            {faqs.map((faq, i) => {
-              const isOpen = openIndex === i
-              const triggerId = `faq-trigger-${i}`
-              const panelId = `faq-panel-${i}`
+        <Reveal className="md:col-span-7 md:col-start-6">
+          <ul className="border-t border-hairline-2">
+            {t.faq.items.map((item, i) => {
+              const isOpen = open === i
+              const btn = `${base}-q${i}`
+              const panel = `${base}-a${i}`
               return (
-                <div key={i} className="border-t border-charcoal/10 last:border-b">
-                  <dt>
+                <li key={item.q} className="border-b border-hairline-2">
+                  <h3>
                     <button
-                      id={triggerId}
+                      id={btn}
                       type="button"
                       aria-expanded={isOpen}
-                      aria-controls={panelId}
-                      onClick={() => setOpenIndex(isOpen ? null : i)}
-                      className="group flex w-full items-center justify-between gap-6 py-6 text-left [touch-action:manipulation]"
+                      aria-controls={panel}
+                      onClick={() => setOpen(isOpen ? null : i)}
+                      className="flex min-h-[64px] w-full items-center justify-between gap-6 py-5 text-start text-[1.05rem] font-medium text-ink transition-colors hover:text-forest"
                     >
-                      <span className="font-serif text-lg leading-snug text-charcoal transition-colors duration-200 group-hover:text-sage-800 sm:text-xl">
-                        {faq.question}
-                      </span>
-                      <span
+                      {item.q}
+                      <Plus
                         aria-hidden="true"
-                        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-sage-300 text-sage-700 transition-colors duration-200 group-hover:border-sage-600 group-hover:bg-sage-600 group-hover:text-cream"
-                      >
-                        <Plus
-                          className={`h-4 w-4 transition-transform duration-300 ease-luxe ${
-                            isOpen ? 'rotate-45' : ''
-                          }`}
-                          strokeWidth={1.75}
-                        />
-                      </span>
+                        strokeWidth={1.5}
+                        className={`h-5 w-5 shrink-0 text-forest transition-transform duration-500 ease-brand ${
+                          isOpen ? 'rotate-45' : ''
+                        }`}
+                      />
                     </button>
-                  </dt>
-                  <dd
-                    id={panelId}
-                    className={`grid transition-all duration-300 ease-luxe ${
-                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  </h3>
+                  <div
+                    id={panel}
+                    role="region"
+                    aria-labelledby={btn}
+                    className={`grid transition-[grid-template-rows] duration-500 ease-brand ${
+                      isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p
-                        aria-hidden={!isOpen}
-                        className="max-w-prose2 pb-7 pr-6 text-[0.95rem] leading-[1.8] text-charcoal-soft sm:pr-12"
-                      >
-                        {faq.answer}
-                      </p>
+                      <p className="max-w-2xl pb-6 pe-10 text-[0.98rem] leading-relaxed text-muted">{item.a}</p>
                     </div>
-                  </dd>
-                </div>
+                  </div>
+                </li>
               )
             })}
-          </dl>
+          </ul>
         </Reveal>
       </div>
     </section>

@@ -1,33 +1,26 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
+import { EASE } from '../lib/motion'
 
 type Props = {
   children: ReactNode
   className?: string
-  /** Stagger delay in seconds. */
   delay?: number
-  /** Vertical travel distance in px. */
+  /** Initial vertical offset in px. Opacity + transform only, so it stays on the GPU. */
   y?: number
 }
 
-/**
- * Subtle, on-brand entrance: fades + lifts content into place as it scrolls into
- * view, once. Honours prefers-reduced-motion by rendering statically.
- */
-export function Reveal({ children, className, delay = 0, y = 18 }: Props) {
-  const reduceMotion = useReducedMotion()
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>
-  }
-
+/** Fade/translate in once when scrolled into view. No scroll-jacking, safe on mobile. */
+export function Reveal({ children, className, delay = 0, y = 22 }: Props) {
+  const reduce = useReducedMotion()
+  if (reduce) return <div className={className}>{children}</div>
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
+      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+      transition={{ duration: 0.8, ease: EASE, delay }}
     >
       {children}
     </motion.div>

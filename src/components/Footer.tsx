@@ -1,199 +1,132 @@
-import { useState } from 'react'
-import { Mail, Phone } from 'lucide-react'
+import { ArrowUpRight, Mail, Phone } from 'lucide-react'
+import { useLang } from '../i18n'
+import { SECTION, business, links, whatsappUrl } from '../data/site'
+import { RouteLink } from '../router'
 import { BrandIcon } from './icons/BrandIcons'
 import { EmailLink } from './EmailLink'
-import { LegalModal } from './LegalModal'
-import { business, policies, primaryWhatsApp } from '../data/site'
-import type { Policy } from '../data/site'
-
-const exploreLinks = [
-  { href: '#story', label: 'Our Story' },
-  { href: '#services', label: 'What We Offer' },
-  { href: '#destinations', label: 'Destinations' },
-  { href: '#faq', label: 'FAQs' },
-]
-
-const legalLinks: { key: keyof typeof policies; label: string }[] = [
-  { key: 'terms', label: 'Terms of Service' },
-  { key: 'privacy', label: 'Privacy Policy' },
-  { key: 'refund', label: 'Refund & Cancellation Policy' },
-]
-
-const socialLinks = [
-  { name: 'instagram' as const, href: business.socials.instagram, label: 'Instagram' },
-  { name: 'facebook' as const, href: business.socials.facebook, label: 'Facebook' },
-  { name: 'linkedin' as const, href: business.socials.linkedin, label: 'LinkedIn' },
-]
+import { Wordmark } from './Wordmark'
 
 export function Footer() {
-  const [openPolicy, setOpenPolicy] = useState<Policy | null>(null)
+  const { t } = useLang()
+  const f = t.footer
   const year = new Date().getFullYear()
 
-  return (
-    <footer id="contact" className="bg-charcoal text-cream">
-      {/* Conversion CTA */}
-      <div className="border-b border-cream/10">
-        <div className="container-luxe py-20 text-center sm:py-24">
-          <p className="text-[0.72rem] font-medium uppercase tracking-wider2 text-sage-300">
-            Begin Your Journey
-          </p>
-          <h2 className="mx-auto mt-5 max-w-2xl font-serif text-3xl font-medium leading-tight text-cream sm:text-4xl lg:text-[2.75rem]">
-            Let’s plan something unforgettable
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base font-light leading-relaxed text-cream/70">
-            Tell us about your day — the people, the place, the feeling. We’ll take care of the rest.
-          </p>
+  const explore = [
+    { id: SECTION.weekend, label: t.nav.weekend },
+    { id: SECTION.venues, label: t.nav.venues },
+    { id: SECTION.budget, label: t.nav.budget },
+    { id: SECTION.portal, label: t.nav.portal },
+    { id: SECTION.story, label: t.nav.story },
+    { id: SECTION.faq, label: t.nav.faq },
+  ]
 
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+  const legal = [
+    { to: '/terms', label: f.terms },
+    { to: '/privacy', label: f.privacy },
+    { to: '/refund', label: f.refund },
+  ]
+
+  const heading = 'text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-bg/60 rtl:tracking-normal rtl:text-[0.8rem]'
+  const item = 'inline-flex min-h-[40px] items-center gap-2.5 text-bg/75 transition-colors hover:text-bg'
+
+  return (
+    <footer className="bg-forest-dark text-bg">
+      <div className="wrap grid gap-12 py-20 md:grid-cols-12 md:gap-8 md:py-24">
+        <div className="md:col-span-4">
+          <Wordmark className="text-bg" />
+          <p className="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-bg/70">{f.tagline}</p>
+          <div className="mt-7 flex items-center gap-2">
             <a
-              href={primaryWhatsApp}
+              href={links.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-full bg-cream px-7 py-3 text-sm font-medium uppercase tracking-[0.14em] text-charcoal transition-colors duration-200 ease-luxe hover:bg-sage-100 [touch-action:manipulation]"
+              aria-label={f.instagram}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-bg/5 transition-colors hover:bg-bg/15"
             >
-              <BrandIcon name="whatsapp" className="h-5 w-5" />
-              Chat on WhatsApp
+              <BrandIcon name="instagram" className="h-[18px] w-[18px]" />
             </a>
-            <EmailLink className="inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-full border border-cream/30 px-7 py-3 text-sm font-medium uppercase tracking-[0.14em] text-cream transition-colors duration-200 ease-luxe hover:border-cream/70 [touch-action:manipulation]">
-              <Mail className="h-4 w-4" strokeWidth={1.6} aria-hidden="true" />
-              Email Us
-            </EmailLink>
-          </div>
-
-          <p className="mx-auto mt-8 max-w-xl text-[0.8rem] leading-relaxed text-cream/60">
-            Every wedding is individually quoted. Secure deposits and payments are processed through
-            Stripe in EUR, USD &amp; ILS.
-          </p>
-        </div>
-      </div>
-
-      {/* Detail columns */}
-      <div className="container-luxe grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
-        {/* Brand + socials */}
-        <div className="lg:pr-6">
-          <div className="font-serif leading-none">
-            <span className="block text-2xl font-medium">Pistachio</span>
-            <span className="mt-1.5 block font-sans text-[0.58rem] font-medium uppercase tracking-wider2 text-sage-300">
-              Weddings &amp; Events
-            </span>
-          </div>
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/60">
-            Boutique destination weddings in Greece, Italy &amp; Cyprus.
-          </p>
-          <div className="mt-6 flex items-center gap-3">
-            <EmailLink
-              aria-label={`Email Pistachio Weddings at ${business.email}`}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-cream/5 text-cream transition-colors duration-200 hover:bg-cream/10"
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={f.whatsapp}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-bg/5 transition-colors hover:bg-bg/15"
             >
-              <Mail className="h-[1.15rem] w-[1.15rem]" strokeWidth={1.6} aria-hidden="true" />
-            </EmailLink>
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Pistachio Weddings on ${social.label}`}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-cream/5 transition-colors duration-200 hover:bg-cream/10"
-              >
-                <BrandIcon name={social.name} className="h-[1.15rem] w-[1.15rem]" />
-              </a>
-            ))}
+              <BrandIcon name="whatsapp" className="h-[18px] w-[18px]" />
+            </a>
+            <a
+              href={links.portal}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ms-2 inline-flex min-h-[44px] items-center gap-1.5 text-[0.88rem] text-bg/80 hover:text-bg"
+            >
+              {t.nav.portal}
+              <ArrowUpRight className="h-4 w-4 rtl:-scale-x-100" strokeWidth={1.6} aria-hidden="true" />
+            </a>
           </div>
         </div>
 
-        {/* Contact / business details (Stripe compliance) */}
-        <div>
-          <h3 className="text-[0.72rem] font-semibold uppercase tracking-wider2 text-cream/80">
-            Contact
-          </h3>
-          <address className="mt-5 space-y-4 not-italic text-sm leading-relaxed text-cream/65">
-            <p>
-              <span className="block font-medium text-cream/90">{business.legalName}</span>
-              {business.address}
-            </p>
-            <EmailLink className="link-underline flex items-center gap-2.5 text-cream/65 hover:text-cream">
-              <Mail className="h-4 w-4 shrink-0 text-sage-300" strokeWidth={1.6} aria-hidden="true" />
-              {business.email}
-            </EmailLink>
-            <ul className="space-y-2.5">
-              {business.phones.map((phone) => (
-                <li key={phone.tel} className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <a
-                    href={`tel:${phone.tel}`}
-                    className="link-underline flex items-center gap-2.5 text-cream/65 hover:text-cream"
-                  >
-                    <Phone
-                      className="h-4 w-4 shrink-0 text-sage-300"
-                      strokeWidth={1.6}
-                      aria-hidden="true"
-                    />
-                    {phone.label}
-                  </a>
-                  {phone.whatsapp && (
-                    <a
-                      href={phone.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full bg-cream/5 px-2.5 py-1 text-[0.7rem] font-medium text-cream/80 transition-colors hover:bg-cream/10"
-                      aria-label="Chat on WhatsApp"
-                    >
-                      <BrandIcon name="whatsapp" className="h-3.5 w-3.5" />
-                      WhatsApp
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </address>
-        </div>
-
-        {/* Explore */}
-        <nav aria-label="Footer" className="text-sm">
-          <h3 className="text-[0.72rem] font-semibold uppercase tracking-wider2 text-cream/80">
-            Explore
-          </h3>
-          <ul className="mt-5 space-y-3">
-            {exploreLinks.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} className="link-underline text-cream/65 hover:text-cream">
-                  {link.label}
+        <nav aria-label={f.explore} className="md:col-span-2">
+          <h2 className={heading}>{f.explore}</h2>
+          <ul className="mt-4 text-[0.92rem]">
+            {explore.map((l) => (
+              <li key={l.id}>
+                <a href={`#${l.id}`} className={item}>
+                  {l.label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
 
-        {/* Legal (modals) */}
-        <div className="text-sm">
-          <h3 className="text-[0.72rem] font-semibold uppercase tracking-wider2 text-cream/80">
-            Legal
-          </h3>
-          <ul className="mt-5 space-y-3">
-            {legalLinks.map((link) => (
-              <li key={link.key}>
-                <button
-                  type="button"
-                  onClick={() => setOpenPolicy(policies[link.key])}
-                  className="link-underline text-left text-cream/65 hover:text-cream"
-                >
-                  {link.label}
-                </button>
+        <div className="md:col-span-3">
+          <h2 className={heading}>{f.contact}</h2>
+          <address className="mt-4 text-[0.92rem] not-italic">
+            <EmailLink className={item}>
+              <Mail className="h-4 w-4 shrink-0 text-sage" strokeWidth={1.6} aria-hidden="true" />
+              <span dir="ltr">{business.email}</span>
+            </EmailLink>
+            <ul>
+              {business.phones.map((p) => (
+                <li key={p.tel}>
+                  <a href={`tel:${p.tel}`} className={item}>
+                    <Phone className="h-4 w-4 shrink-0 text-sage" strokeWidth={1.6} aria-hidden="true" />
+                    <span dir="ltr">{p.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-[0.82rem] leading-relaxed text-bg/55" dir="ltr" lang="en">
+              {business.legalName}
+              <br />
+              {business.address}
+            </p>
+          </address>
+        </div>
+
+        <nav aria-label={f.legal} className="md:col-span-3">
+          <h2 className={heading}>{f.legal}</h2>
+          <ul className="mt-4 text-[0.92rem]">
+            {legal.map((l) => (
+              <li key={l.to}>
+                <RouteLink to={l.to} className={item}>
+                  {l.label}
+                </RouteLink>
               </li>
             ))}
           </ul>
-        </div>
+          {f.legalNote && <p className="mt-3 text-[0.8rem] text-bg/50">{f.legalNote}</p>}
+        </nav>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-cream/10">
-        <div className="container-luxe flex flex-col items-center justify-between gap-3 py-6 text-center text-[0.72rem] text-cream/50 sm:flex-row sm:text-left">
-          <p>© {year} {business.legalName}. All rights reserved.</p>
-          <p>Secure payments via Stripe · EUR · USD · ILS</p>
+      <div className="border-t border-bg/10">
+        <div className="wrap flex flex-col gap-2 py-6 text-[0.78rem] text-bg/50 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} <span dir="ltr">{business.legalName}</span>. {f.rights}
+          </p>
+          <p>{f.payments}</p>
         </div>
       </div>
-
-      <LegalModal policy={openPolicy} onClose={() => setOpenPolicy(null)} />
     </footer>
   )
 }

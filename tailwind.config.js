@@ -1,68 +1,56 @@
 /** @type {import('tailwindcss').Config} */
+// Design tokens mirror pistachio-portal v5. See DESIGN_SYSTEM.md before adding new ones.
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        // Clean off-white canvas + warmer ivory for alternating sections.
-        cream: {
-          DEFAULT: '#FAFAFA',
-          warm: '#F6F4EF',
-          deep: '#EFEBE3',
-        },
-        // Sage green accent scale built around the logo green (#9FAF90 / #A2B997).
-        // 500 = brand. 700/800 are AA-safe for text on light backgrounds.
-        sage: {
-          50: '#F4F7F1',
-          100: '#E8EEE2',
-          200: '#D5E0C9',
-          300: '#BFD0AF',
-          400: '#A2B997',
-          500: '#9FAF90',
-          600: '#7E9070',
-          700: '#5E6E50',
-          800: '#49563E',
-          900: '#3A4531',
-        },
-        // Soft charcoal text (never pitch black) per the brand brief.
-        charcoal: {
-          DEFAULT: '#2D2D2D',
-          soft: '#4A4A4A',
-          muted: '#6B6B6B',
-        },
+        bg: '#FAFAF6',
+        'sage-ghost': '#F4F6EE',
+        inset: '#F3F5EC',
+        'sage-soft': '#E9EDDE',
+        forest: { DEFAULT: '#3D5741', dark: '#33493A' },
+        sage: '#A6B494',
+        ink: '#2B3328',
+        muted: '#6F7767',
+        faint: '#9EA695',
+        hairline: { DEFAULT: '#E8EAE0', 2: '#DADDCE' },
+        bezel: '#1E231D',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'Cambria', 'serif'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // `display` switches to Heebo automatically when <html lang="he"> (see index.css).
+        display: ['var(--font-display)'],
+        // Always Cormorant (wordmark, numerals), regardless of language.
+        serif: ['"Cormorant Garamond"', 'Cormorant', 'Georgia', 'serif'],
+        sans: ['Heebo', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
       },
-      letterSpacing: {
-        luxe: '0.18em',
-        wider2: '0.28em',
+      fontSize: {
+        // Fluid display scale. Values live in CSS vars so Hebrew can use a calmer scale.
+        'd-hero': ['var(--fs-hero)', { lineHeight: 'var(--lh-display)' }],
+        'd-1': ['var(--fs-d1)', { lineHeight: 'var(--lh-display)' }],
+        'd-2': ['var(--fs-d2)', { lineHeight: '1.12' }],
+        'd-3': ['var(--fs-d3)', { lineHeight: '1.2' }],
+        eyebrow: ['0.72rem', { lineHeight: '1rem', letterSpacing: '0.2em' }],
       },
       maxWidth: {
-        content: '1200px',
-        prose2: '68ch',
+        site: '1240px',
       },
       boxShadow: {
-        soft: '0 18px 50px -24px rgba(45, 45, 45, 0.18)',
-        card: '0 10px 36px -18px rgba(45, 45, 45, 0.16)',
-        lift: '0 24px 60px -28px rgba(45, 45, 45, 0.28)',
+        card: '0 1px 2px rgba(43,51,40,.05)',
+        up: '0 4px 16px rgba(43,51,40,.09)',
+        phone: '0 40px 80px -30px rgba(43,51,40,.45), 0 12px 30px -12px rgba(43,51,40,.25)',
       },
       transitionTimingFunction: {
-        luxe: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        brand: 'cubic-bezier(0.22, 0.61, 0.36, 1)',
       },
       keyframes: {
-        'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        'soft-pan': {
-          '0%': { transform: 'scale(1.06)' },
-          '100%': { transform: 'scale(1.14)' },
+        'ken-burns': {
+          '0%': { transform: 'scale(1.02) translate3d(0,0,0)' },
+          '100%': { transform: 'scale(1.1) translate3d(-1.5%,-1%,0)' },
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'ken-burns': 'ken-burns 28s cubic-bezier(0.22, 0.61, 0.36, 1) infinite alternate',
       },
     },
   },

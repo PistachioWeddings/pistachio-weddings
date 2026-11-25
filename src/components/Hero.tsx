@@ -1,101 +1,95 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
-import { business, primaryWhatsApp } from '../data/site'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { useLang } from '../i18n'
+import { HERO_VIDEO_ENABLED, SECTION, links, media } from '../data/site'
+import { DESKTOP_QUERY, EASE, useMediaQuery } from '../lib/motion'
 
-// Destination-wedding hero photography (served from /public/images).
-const HERO_IMAGE = '/images/hero.jpg'
-
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
+// React 18 doesn't type `fetchpriority` yet; pass it through as a raw attribute.
+const highPriority = { fetchpriority: 'high' } as Record<string, string>
 
 export function Hero() {
-  const reduceMotion = useReducedMotion()
+  const { t } = useLang()
+  const reduce = useReducedMotion()
+  const desktop = useMediaQuery(DESKTOP_QUERY)
+  const { scrollY } = useScroll()
+  const parallax = desktop && !reduce
+  const y = useTransform(scrollY, [0, 900], [0, parallax ? 180 : 0])
+  const fade = useTransform(scrollY, [0, 500], [1, parallax ? 0 : 1])
 
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-  }
-  const item = {
-    hidden: { opacity: 0, y: reduceMotion ? 0 : 22 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: EASE } },
-  }
+  const enter = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 18 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 1, ease: EASE, delay },
+        }
 
   return (
-    <section
-      id="top"
-      className="relative flex min-h-[100svh] items-center overflow-hidden bg-sage-900"
-    >
-      {/* Fixed-attachment background: the image stays pinned to the viewport while
-          the page scrolls up over it — a clear parallax as you scroll down. Falls
-          back to a normal scrolling background on touch devices (bg-fixed is
-          unreliable on iOS) and when reduced motion is preferred. */}
-      <div
-        aria-hidden="true"
-        className={`absolute inset-0 bg-cover bg-center ${reduceMotion ? '' : 'md:bg-fixed'}`}
-        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
-      />
-      {/* Legibility overlays. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/35 to-charcoal/70"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-cream/90 to-transparent"
-      />
-
-      {/* Content */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="container-luxe relative z-10 max-w-3xl py-32 text-cream"
-      >
-        <motion.p
-          variants={item}
-          className="text-[0.72rem] font-medium uppercase tracking-wider2 text-cream/85"
-        >
-          {business.name}
-        </motion.p>
-
-        <motion.h1
-          variants={item}
-          className="mt-6 font-serif text-[2.3rem] font-medium leading-[1.12] sm:text-6xl sm:leading-[1.08] lg:text-[4.25rem]"
-        >
-          Boutique Destination Weddings in Greece, Italy &amp; Cyprus.
-        </motion.h1>
-
-        <motion.p
-          variants={item}
-          className="mt-7 max-w-xl text-base font-light leading-relaxed text-cream/85 sm:text-lg"
-        >
-          A married couple crafting customized, intimate celebrations in the most unforgettable
-          corners of the Mediterranean.
-        </motion.p>
-
-        <motion.div variants={item} className="mt-10">
-          <a
-            href={primaryWhatsApp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary group"
-          >
-            Plan Your Dream Wedding
-            <ArrowRight
-              className="h-4 w-4 transition-transform duration-200 ease-luxe group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </a>
-        </motion.div>
+    <section id="top" className="relative h-[100svh] min-h-[600px] overflow-hidden bg-ink text-white">
+      <motion.div style={{ y }} className="absolute inset-0 will-change-transform">
+        {HERO_VIDEO_ENABLED ? (
+          <video
+            className="h-full w-full object-cover"
+            src={media.heroVideo}
+            poster={media.heroPoster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          />
+        ) : (
+          <img
+            src={media.heroPoster}
+            alt={t.hero.alt}
+            width={1440}
+            height={810}
+            decoding="async"
+            {...highPriority}
+            className="h-full w-full origin-center object-cover motion-safe:animate-ken-burns"
+          />
+        )}
       </motion.div>
 
-      {/* Quiet scroll cue */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-cream/70 sm:flex"
+      {/* Legibility: soft top band for the header, deeper base for the copy. */}
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/45 to-transparent" />
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#1b2119]/85 via-[#1b2119]/25 to-transparent" />
+
+      <motion.div style={{ opacity: fade }} className="relative flex h-full items-end">
+        <div className="wrap pb-[max(4.5rem,env(safe-area-inset-bottom))] md:pb-24">
+          <motion.p {...enter(0.1)} className="text-eyebrow font-medium uppercase text-white/80">
+            {t.hero.eyebrow}
+          </motion.p>
+          <motion.h1
+            {...enter(0.2)}
+            className="mt-5 max-w-[16ch] font-display text-d-hero font-medium text-white"
+          >
+            {t.hero.title}
+          </motion.h1>
+          <motion.p {...enter(0.35)} className="mt-6 max-w-xl text-[1.02rem] font-light leading-relaxed text-white/85 md:text-[1.1rem]">
+            {t.hero.sub}
+          </motion.p>
+          <motion.div {...enter(0.5)} className="mt-9 flex flex-wrap items-center gap-3">
+            <a href={`#${SECTION.inquiry}`} className="btn bg-white text-ink hover:bg-sage-soft">
+              {t.hero.cta}
+            </a>
+            <a href={links.portal} target="_blank" rel="noopener noreferrer" className="btn-light">
+              {t.hero.portal}
+              <ArrowUpRight className="h-4 w-4 rtl:-scale-x-100" strokeWidth={1.6} aria-hidden="true" />
+            </a>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <a
+        href={`#${SECTION.weekend}`}
+        aria-label={t.hero.scroll}
+        className="absolute bottom-6 end-5 hidden h-11 w-11 items-center justify-center rounded-full border border-white/30 text-white/80 transition-colors hover:border-white hover:text-white md:end-12 md:flex"
       >
-        <span className="text-[0.6rem] uppercase tracking-wider2">Discover</span>
-        <span className="h-10 w-px bg-cream/40" />
-      </div>
+        <ArrowDown className="h-4 w-4 motion-safe:animate-bounce" strokeWidth={1.5} aria-hidden="true" />
+      </a>
     </section>
   )
 }
