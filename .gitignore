@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local media review & design inspiration (never deploy)
+_media-review/
+_design-ref/
