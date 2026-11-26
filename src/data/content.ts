@@ -59,8 +59,8 @@ const en = {
     home: 'Pistachio Weddings, back to top',
   },
   hero: {
-    eyebrow: 'Destination weddings in Greece',
-    title: 'A whole weekend in Greece, with everyone you love.',
+    eyebrow: 'Destination weddings',
+    title: 'A whole weekend in a destination you choose, with everyone you love.',
     sub: 'We plan and produce three-day weddings for 45 to 150 guests. Venue, vendors, rooms and transfers, with a budget you can read line by line.',
     cta: 'Start planning',
     portal: 'Couple Portal',
@@ -394,8 +394,8 @@ const he: SiteContent = {
     home: 'Pistachio Weddings, חזרה למעלה',
   },
   hero: {
-    eyebrow: 'חתונות יעד ביוון',
-    title: 'סוף שבוע שלם ביוון, עם כל מי שאתם אוהבים.',
+    eyebrow: 'חתונות יעד',
+    title: 'סוף שבוע שלם ביעד שתבחרו, עם כל מי שאתם אוהבים.',
     sub: 'אנחנו מתכננים ומפיקים חתונות של שלושה ימים, ל-45 עד 150 אורחים. מקום, ספקים, חדרים והסעות, ותקציב שאפשר לקרוא שורה-שורה.',
     cta: 'מתחילים לתכנן',
     portal: 'פורטל הזוג',
