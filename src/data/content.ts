@@ -110,15 +110,17 @@ const en = {
   },
   venues: {
     eyebrow: 'Venues',
-    title: 'Places we know well',
+    title: 'A taste of our venues',
     intro:
       'Three venues in Greece we have worked with and trust. Each one holds a full weekend: rooms for your guests, a spot for the ceremony and space for the party.',
     capacity: 'Guests',
     distance: 'Getting there',
-    flow: 'The weekend here',
     highlight: 'See it on Instagram',
-    beyond: 'We also produce weddings in Italy and Cyprus, on request.',
+    beyond:
+      'These are just a few of the venues we work with across Greece — and we also produce in Italy and Cyprus. For more venues and location options, you can',
+    beyondLink: 'contact us',
     photo: 'Photo',
+    video: 'Video',
     of: 'of',
   },
   budget: {
@@ -169,7 +171,7 @@ const en = {
       scheduleTitle: 'The weekend',
       schedule: [
         { day: 'Wed', time: '20:00', what: 'Welcome dinner at the taverna' },
-        { day: 'Thu', time: '19:00', what: 'Ceremony on the pier' },
+        { day: 'Thu', time: '19:00', what: 'Ceremony on the beach' },
         { day: 'Fri', time: '11:00', what: 'Brunch by the pool' },
       ],
       nextTitle: 'Next up',
@@ -442,15 +444,17 @@ const he: SiteContent = {
   },
   venues: {
     eyebrow: 'מקומות',
-    title: 'מקומות שאנחנו מכירים טוב',
+    title: 'טעימה מהלוקיישנים שלנו',
     intro:
       'שלושה מקומות ביוון שעבדנו בהם ואנחנו סומכים עליהם. כל אחד מתאים לסוף שבוע שלם: חדרים לאורחים, מקום לחופה ומקום למסיבה.',
     capacity: 'אורחים',
     distance: 'הגעה',
-    flow: 'סוף השבוע כאן',
     highlight: 'לצפייה באינסטגרם',
-    beyond: 'אנחנו מפיקים חתונות גם באיטליה ובקפריסין, לפי בקשה.',
+    beyond:
+      'זו רק טעימה מהלוקיישנים שאנחנו עובדים איתם ברחבי יוון — ואנחנו מפיקים גם באיטליה ובקפריסין. לעוד מלונות ואפשרויות לוקיישן,',
+    beyondLink: 'דברו איתנו',
     photo: 'תמונה',
+    video: 'סרטון',
     of: 'מתוך',
   },
   budget: {
@@ -501,7 +505,7 @@ const he: SiteContent = {
       scheduleTitle: 'סוף השבוע',
       schedule: [
         { day: 'רביעי', time: '20:00', what: 'ארוחת פתיחה בטברנה' },
-        { day: 'חמישי', time: '19:00', what: 'חופה על המזח' },
+        { day: 'חמישי', time: '19:00', what: 'חופה על החוף' },
         { day: 'שישי', time: '11:00', what: 'בראנץ׳ ליד הבריכה' },
       ],
       nextTitle: 'מה הלאה',

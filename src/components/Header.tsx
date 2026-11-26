@@ -76,7 +76,7 @@ export function Header() {
             aria-label={t.nav.home}
             className="me-auto inline-flex min-h-[44px] items-center"
           >
-            <Wordmark />
+            <Wordmark mark={solid ? 'brand' : 'light'} />
           </a>
 
           <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">

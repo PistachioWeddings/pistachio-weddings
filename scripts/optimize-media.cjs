@@ -23,11 +23,6 @@ const jobs = [
   { src: "IMG_0136.JPG", out: "weekend/morning-beach.webp" },
   { src: "IMG_9772.JPG", out: "weekend/morning-couple.webp" },
 
-  // Venue 1: Coastal Boutique Resort (4)
-  { src: "IMG_7213.jpg", out: "venues/coastal-resort/01-aerial-chuppah.webp" },
-  { src: "IMG_7215.jpg", out: "venues/coastal-resort/02-twilight-resort.webp" },
-  { src: "IMG_7214.jpg", out: "venues/coastal-resort/03-night-villas.webp" },
-  { src: "IMG_9819.JPG", out: "venues/coastal-resort/04-pool-day.webp" },
 
   // Venue 2: Private Cove & Chapel (4)
   { src: "IMG_0095.JPG", out: "venues/private-cove/01-cove-drone.webp" },
@@ -35,11 +30,7 @@ const jobs = [
   { src: "IMG_0131.JPG", out: "venues/private-cove/03-chapel-steps.webp" },
   { src: "IMG_0185.JPG", out: "venues/private-cove/04-olive-table.webp" },
 
-  // Venue 3: Whitewashed Sea Terrace (4)
-  { src: "IMG_2490.JPG", out: "venues/sea-terrace/01-white-terrace.webp" },
-  { src: "IMG_2557.jpeg", out: "venues/sea-terrace/02-table-sea.webp" },
-  { src: "IMG_9841.JPG", out: "venues/sea-terrace/03-pergola-dance.webp" },
-  { src: "IMG_9809.JPG", out: "venues/sea-terrace/04-terrace-dinner.webp" },
+  // Seafront Resort and Amphitheater media (v2-*) were converted separately; see src/data/venues.ts
 
   // Editorial couples & details (5)
   { src: "IMG_2493.JPG", out: "editorial/couple-bw-water.webp" },

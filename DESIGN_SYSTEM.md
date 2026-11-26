@@ -102,7 +102,7 @@ src/
   data/
     site.ts       HERO_VIDEO_ENABLED, media paths, business/legal entity, phones, links, WhatsApp number, section ids
     content.ts    ALL EN/HE copy (en defines the shape, he must match), weekend/editorial/about media, phone demo data
-    venues.ts     3 venue cards (bilingual fields), photos, Highlight URLs, slideshow timing
+    venues.ts     3 venue cards (bilingual fields), photo/video slides, Highlight URLs, slideshow timing
     legal.ts      Terms / Privacy / Refund (English only, compliance wording)
   i18n.tsx        LangProvider + useLang() → { lang, setLang, t, isRtl }
   router.tsx      History-API router, RouteLink (hover/focus/touch prefetch), scroll memory
@@ -115,7 +115,7 @@ src/
     About, Editorial, Process, Faq, Inquiry, Footer, Reveal, SectionHeading, EmailLink, icons/BrandIcons
 public/
   _headers        Cloudflare Pages cache rules
-  media/          All optimized photos (hero/, weekend/, venues/<slug>/, editorial/, about/)
+  media/          All optimized media (brand/, hero/, weekend/, venues/<slug>/, editorial/, about/)
 ```
 
 ### Common edits
@@ -123,9 +123,11 @@ public/
 - **Turn on the hero video:** drop the file at `public/media/hero/hero-video.mp4` (H.264, muted, ≤4MB, ~10–20s loop),
   then set `HERO_VIDEO_ENABLED = true` in `src/data/site.ts`. The poster stays as the video `poster`, so LCP is unchanged.
 - **Swap a venue photo:** add the new file to `public/media/venues/<slug>/` with a **new file name** (media is cached
-  as immutable for a year), then update its `src` and `alt` in `src/data/venues.ts`. Keep 4 photos per card.
-- **Set a real Instagram Highlight:** replace `highlightUrl` for that venue in `src/data/venues.ts`.
-- **Venue facts:** `capacity`, `fromAthens`, `flow` live in `src/data/venues.ts`. Never add hotel names.
+  as immutable for a year), then update its `src` and `alt` in `src/data/venues.ts`. Photo count per card is flexible.
+- **Venue video slide:** `{ type: 'video', src, poster, alt }` as the last item in `media`. H.264, no audio track,
+  720p, ≤3MB, faststart. It plays once, muted, then returns to slide 1; reduced motion shows the poster only.
+- **Update an Instagram Highlight:** replace `highlightUrl` for that venue in `src/data/venues.ts`.
+- **Venue facts:** `capacity`, `fromAthens` live in `src/data/venues.ts`. Never add hotel names.
 - **Copy changes:** edit `src/data/content.ts` (both `en` and `he`). TypeScript fails the build if the Hebrew object
   is missing a key.
 - **WhatsApp number for the form:** `WHATSAPP_NUMBER` in `src/data/site.ts`.
@@ -150,7 +152,7 @@ public/
 - [ ] Confirm no "minimum" / "starting from" / "מינימום" / "החל מ" anywhere, and no blacklist words from `anti-AI-style.md`.
 - [ ] Check every mixed Hebrew/number line in RTL: budget range, guest counts (`60–90`), times, `€` amounts in the phone.
 - [ ] Check arrows: Hebrew should point left (`rtl:-scale-x-100` on every directional icon).
-- [ ] Confirm the venue facts with Raday (`capacity`, `fromAthens`) and replace the 3 `highlightUrl` placeholders.
+- [x] Venue facts and Instagram Highlight links set.
 - [ ] Verify FAQ "How far ahead should we book?" matches how Raday actually answers it.
 
 ### 2. Mobile / Safari motion & performance QA
@@ -168,4 +170,4 @@ public/
 - [ ] Budget card: range stays on one line from `md`, wraps cleanly on small phones.
 - [ ] Moments strip end alignment in RTL on wide screens.
 - [ ] Footer columns at `md` (4/2/3/3 split) with the long legal labels.
-- [ ] Replace `01-aerial-chuppah.webp` if the baked-in "Wedding time" text overlay isn't wanted on the venue card.
+- [ ] Replace `coastal-resort/v2-03.webp` if the baked-in "Noga & her magic" text overlay isn't wanted on the venue card.
